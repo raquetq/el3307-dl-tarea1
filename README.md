@@ -10,7 +10,55 @@
 
 ### 3.0 Descripción general del sistema
 
-### 3.1 Módulo 1
+### 3.1 Módulo 1 (Código Gray a Código Binario)
+#### 1. Encabezado del módulo
+```SystemVerilog
+module mi_modulo(
+    input logic     entrada_i,      
+    output logic    salida_i 
+    );
+```
+#### 2. Parámetros
+- Lista de parámetros
+
+#### 3. Entradas y salidas:
+- `entrada_i`: descripción de la entrada
+- `salida_o`: descripción de la salida
+
+#### 4. Criterios de diseño
+Diagramas, texto explicativo...
+
+#### 5. Testbench
+Descripción y resultados de las pruebas hechas
+
+### Otros modulos
+- agregar informacion siguiendo el ejemplo anterior.
+
+### 3.2 Módulo 2 (Código Binario en LEDs)
+#### 1. Encabezado del módulo
+```SystemVerilog
+module mi_modulo(
+    input logic     entrada_i,      
+    output logic    salida_i 
+    );
+```
+#### 2. Parámetros
+- Lista de parámetros
+
+#### 3. Entradas y salidas:
+- `entrada_i`: descripción de la entrada
+- `salida_o`: descripción de la salida
+
+#### 4. Criterios de diseño
+Diagramas, texto explicativo...
+
+#### 5. Testbench
+Descripción y resultados de las pruebas hechas
+
+### Otros modulos
+- agregar informacion siguiendo el ejemplo anterior.
+
+### 3.3 Módulo 3 (Co¿ódigo Decimal en 7 Segmentos)
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module mi_modulo(
