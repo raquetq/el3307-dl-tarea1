@@ -1,8 +1,8 @@
 module module7SEG(
-    input logic [3:0] cod_bin;
-    output logic [1:0] anodo_po;
-    output logic [6:0] catodo_po;
-)
+    input logic [3:0] cod_bin,
+    output logic [1:0] anodo_po,
+    output logic [6:0] catodo_po
+);
 
     assign A = cod_bin[3];
     assign B = cod_bin[2];
@@ -10,7 +10,7 @@ module module7SEG(
     assign D = cod_bin[0];
 
     //seg a
-    assign seg_a = ;
+    assign seg_a = (B || D) && (!A || C) && (A || !C) && (A || !D); //seg a unidades
     
     //seg b
     //seg c
