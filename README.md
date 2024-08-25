@@ -11,7 +11,7 @@
 
 ### 3.0 Descripción general del sistema
 
-### 3.1 Módulo 1 (Código Gray a Código Binario)
+### 3.1 Módulo 1 (Conversión Código Gray a Código Binario)
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module moduleGray (
@@ -35,20 +35,21 @@ Para el testbench de este módulo se demostró que la conversión funcionara de 
 ### 3.2 Módulo 2 (Código Binario en LEDs)
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
+module moduleLED(
+    input logic [3:0] cod_bin,
+    output logic [3:0] codigo_bin_led_po  
+);
 ```
 #### 2. Parámetros
 - Lista de parámetros
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_o`: descripción de la salida
+- `cod_bin`: Entrada que toma la salida del módulo de conversión
+- `codigo_bin_led_po`: Salida que transporta el estado de los LEDs
 
 #### 4. Criterios de diseño
 Diagramas, texto explicativo...
+Se planteó que los bits obtenidos en el módulo 3.1, cada atravesara un multiplexor donde el valor del bit es el que selecciona la condición del LED, si apagado o encendido.
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
@@ -59,20 +60,23 @@ Descripción y resultados de las pruebas hechas
 ### 3.3 Módulo 3 (Co¿ódigo Decimal en 7 Segmentos)
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
+module module7SEG(
+    input logic [3:0] cod_bin,
+    output logic [1:0] anodo_po,
+    output logic [6:0] catodo_po
+);
 ```
 #### 2. Parámetros
 - Lista de parámetros
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_o`: descripción de la salida
+- `cod_bin`: Entrada que toma la salida del módulo de conversión
+- `anodo_po`: Salida que determina que 7-segmentos enciende
+- `catodo_po`: Salida que tiene el valor de los estados para cada LED de los 7-segmentos
 
 #### 4. Criterios de diseño
 Diagramas, texto explicativo...
+Para cada LED del 7-segmentos se realizó una tabla de verdad que determina que cuando se encienden y cuando se apagan, tanto para el 7-segmentos que representa las unidades como el que representa las decenas. 
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
