@@ -21,7 +21,7 @@ module moduleMainTB;
     );
 
     moduleSwitchDisp Button(
-    .button(button),
+    .btn(button),
     .anodo_po(disp)
     );
 
@@ -50,7 +50,11 @@ module moduleMainTB;
         gray = 4'b1010; #13;
         gray = 4'b1011; #14;
         gray = 4'b1001; #15;
-        gray = 4'b1000;
+        gray = 4'b1000; #16;
+
+        gray = 4'b1010; #17;
+        button = 1; #17;
+        button = 0; #18;
     end
 
     initial begin
