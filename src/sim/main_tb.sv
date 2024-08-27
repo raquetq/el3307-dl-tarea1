@@ -20,21 +20,21 @@ module moduleMainTB;
     .codigo_bin_led_po(led)  
     );
 
-    moduleSwitchDisp Button(
-    .btn(button),
-    .anodo_po(disp)
-    );
-
     module7SEG Decod(
-    .cod_bin(led),
+    .rst_pi(button),
+    .cod_bin(bin),
     .anodo_po(disp),
     .catodo_po(seg7)
     );
     
     initial begin
-        $monitor("Bin(%d), Seg7(%b), displays(%b)", bin, seg7, disp);
-        button = 1; #10;
+        $monitor("Dec(%d), Bin(%b), Seg7(%b), displays(%b)", bin, bin, seg7, disp);
+        gray = 4'b0000; #1; //valor inicial
+        button = 0; #1;
+        button = 1; #1;
         gray = 4'b0000; #1;
+        
+        button = 0; #2;
         gray = 4'b0001; #2;
         gray = 4'b0011; #3;
         gray = 4'b0010; #4;
@@ -43,7 +43,6 @@ module moduleMainTB;
         gray = 4'b0101; #7;
         gray = 4'b0100; #8;
         gray = 4'b1100; #9;
-           button = 0; #10; //simula que se presiono el boton
         gray = 4'b1101; #10;
         gray = 4'b1111; #11;
         gray = 4'b1110; #12;
@@ -51,10 +50,15 @@ module moduleMainTB;
         gray = 4'b1011; #14;
         gray = 4'b1001; #15;
         gray = 4'b1000; #16;
-
-        gray = 4'b1010; #17;
-        button = 1; #17;
-        button = 0; #18;
+        
+        button = 1; #17; //simula que se presiono el boton
+        gray = 4'b1101; #18;
+        gray = 4'b1111; #19;
+        gray = 4'b1110; #20;
+        gray = 4'b1010; #21;
+        gray = 4'b1011; #22;
+        gray = 4'b1001; #23;
+        gray = 4'b1000; #24;
     end
 
     initial begin
