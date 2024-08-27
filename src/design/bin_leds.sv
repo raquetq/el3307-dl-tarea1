@@ -1,6 +1,6 @@
 module moduleLED(
     input logic [3:0] cod_bin,
-    input logic [3:0] codigo_bin_led_po  
+    output logic [3:0] codigo_bin_led_po  
 );
 
     assign codigo_bin_led_po[0] = (cod_bin[0] == 1'b1) ? 1'b1:1'b0;
