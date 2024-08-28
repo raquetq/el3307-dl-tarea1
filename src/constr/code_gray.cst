@@ -49,8 +49,8 @@ IO_PORT "codigo_gray_pi[1]" IO_TYPE=LVCMOS33 PULL_MODE=DOWN;
 IO_LOC  "codigo_gray_pi[0]" 28;
 IO_PORT "codigo_gray_pi[0]" IO_TYPE=LVCMOS33 PULL_MODE=DOWN;
 
-IO_LOC  "clk_pi" 52;
-IO_PORT "clk_pi" IO_TYPE=LVCMOS33 PULL_MODE=UP;
-
 IO_LOC  "rst_pi" 3;
 IO_PORT "rst_pi" IO_TYPE=LVCMOS18;
+
+IO_LOC  "clk_pi" 52;
+IO_PORT "clk_pi" IO_TYPE=LVCMOS33 PULL_MODE=UP;
