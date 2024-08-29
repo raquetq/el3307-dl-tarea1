@@ -8,8 +8,6 @@ module moduleMainTB;
     logic [1:0] disp;
     logic [0:0] button;
 
-
-
     moduleGray Conv(
         .codigo_gray_pi(gray),
         .cod_bin(bin)
