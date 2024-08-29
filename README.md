@@ -35,13 +35,9 @@ module moduleGray (
 
 #### 4. Criterios de diseño
 Basándose de la conversión de código Gray a código binario se buscó una forma de representarlo en ecuaciones lógicas. Para convertir un número en código Gray a código binario, primero, se mantiene el MSB, y luego, se toma este valor y se suma al siguiente bit, si la suma da como resultado 10'b, se descarta el acarreo, y a partir de este punto puede ser visto como una operación XOR entre el resultado y el siguiente bit. Las ecuaciones lógicas para este módulo fueron las siguientes:
-- Y[3] = A
-- Y[2] = Y[3]!B + !Y[3]B
-- Y[1] = Y[2]!C + !Y[2]C
-- Y[0] = Y[1]!D + !Y[1]D
 
 Se obtuvo la ecuación booleana: $\` Y_1 = A ; Y_2 = A \oplus B ; Y_3 = A\oplus B\oplus C; Y_4= A\oplus B\oplus C\oplus D \`$. 
-La representacion en un diagrama es el suguiente. 
+La representacion en un diagrama es el siguiente. 
 
 ![diagrama de bloques de traducion codigo gray a binario](doc/img/diag_gray_a_bin.jpg)
 
@@ -71,7 +67,7 @@ Se planteó que los bits obtenidos en el módulo 3.1, atravesara cada uno un mul
 #### 5. Testbench
 Al igual que el módulo anterior, el testbench probó que la tabla de equivalencias de código gray con código binario se cumpliera sin problemas y los mostraba en la consola de comandos, con el valor 1 representando cuando el LED está encendido y el valor 0 cuando está apagado.
 
-### 3.3 Módulo 3 (Co¿ódigo Decimal en 7 Segmentos)
+### 3.3 Módulo 3 (Código Decimal en 7 Segmentos)
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module module7SEG(
@@ -133,7 +129,7 @@ Se procedio a la simplificacion de la ecuacion booleana, por medio de la utiliza
 
 $\` a = BD + \overline{A}C + A\overline{C}+\overline{BD} \`$ 
 
-#### 5. Testbench
+#### 6. Testbench
 Para la prueba en el testbench, se decidió probar que mostrara el resultado decimal correcto, que cada segmento encendiera al valor correcto y simulaciones de presionar el botón para comprobar el cambio del 7-segmento de unidades a decenas y viceversa.
 
 ## 4. Consumo de recursos
@@ -141,6 +137,7 @@ Para la prueba en el testbench, se decidió probar que mostrara el resultado dec
 ## 5. Problemas encontrados durante el proyecto
 1. Cuando se declara un commutador, si el nombre es únicamente una letra mayúscula o un número, el programa no toma como tal. Para solucionarlo se decidió utilzar letras minúsculas y enumerarlas si fuera el caso.
 2. Al declarar las "constrains", se debe colocar el valor de tensión en los pines, debido a que si uno de estos lo atraviesan tensiones diferentes el código no podrá ser colocado en el FPGA.
+3. En el modulo de 7 segmentos al agregar la ecuacion booleana al segmento f, estaba dando un valor no esperado, por lo que se tuvo que volver a evaluar este segmento para obtener el resultado deseado.
 
 ## Apendices:
 ### Apendice 1:
