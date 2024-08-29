@@ -22,7 +22,7 @@ TESTBENCH = ../sim/main_tb.sv
 CONSTRAINTS = ../constr/code_gray.cst
 
 #el top se indica sin la extension .v, esto hace referencia al nombre que le pusieron al módulo y no al archivo en si.
-TOP_DESIGN = moduleGray
+TOP_DESIGN = TopModule
 TOP_TB     = moduleMainTB
 
 #nombre del vcd que va a generar el tb

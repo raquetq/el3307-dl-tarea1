@@ -8,6 +8,16 @@ module moduleMainTB;
     logic [1:0] disp;
     logic [0:0] button;
 
+    TopModule Top(
+        .codigo_gray_pi(gray),
+        .rst_pi(button),
+        .cod_bin(bin),
+        .codigo_bin_led_po(led),
+        .anodo_po(disp),
+        .catodo_po(seg7)
+    );
+    /*
+
     moduleGray Conv(
         .codigo_gray_pi(gray),
         .cod_bin(bin)
@@ -23,7 +33,7 @@ module moduleMainTB;
         .cod_bin(bin),
         .anodo_po(disp),
         .catodo_po(seg7)
-    );
+    );*/
     
     initial begin
         $monitor("Dec(%d), Bin(%b), Seg7(%b), displays(%b), LED(%b)", bin, bin, seg7, disp, led);
