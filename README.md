@@ -1,4 +1,4 @@
-# Nombre del proyecto
+# Tarea 1: Introducción a diseño digital en HDL
 
 ## 1. Abreviaturas y definiciones
 - **FPGA**: Field Programmable Gate Arrays
@@ -10,8 +10,12 @@
 ## 3. Desarrollo
 
 ### 3.0 Descripción general del sistema
+(describir circuito completo)
+
+![diagrama de bloques del sistema en general](doc/img/diag_general.jpg) 
 
 ### 3.1 Módulo 1 (Conversión Código Gray a Código Binario)
+
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module moduleGray (
@@ -29,8 +33,15 @@ module moduleGray (
 #### 4. Criterios de diseño
 Basándose de la conversión de código Gray a código binario se buscó una forma de representarlo en ecuaciones lógicas. Para convertir un número en código Gray a código binario, primero, se mantiene el MSB, y luego, se toma este valor y se suma al siguiente bit, si la suma da como resultado 10'b, se descarta el acarreo, y a partir de este punto puede ser visto como una operación XOR entre el resultado y el siguiente bit.
 
+Se obtuvo la ecuación booleana: $\` Y_1 = A ; Y_2 = A \oplus B ; Y_3 = A\oplus B\oplus C; Y_4= A\oplus B\oplus C\oplus D \`$. 
+La representacion en un diagrama es el suguiente. 
+
+![diagrama de bloques de traducion codigo gray a binario](doc/img/diag_gray_a_bin.jpg)
+
+
 #### 5. Testbench
 Para el testbench de este módulo se demostró que la conversión funcionara de acuerdo con la tabla de verdad realizada para todo valor de la misma visualizando el resultado la consola de comandos. Cada dato ingresado lanzó el resultado correcto.
+(resultados)
 
 ### 3.2 Módulo 2 (Código Binario en LEDs)
 #### 1. Encabezado del módulo
@@ -48,16 +59,14 @@ module moduleLED(
 - `codigo_bin_led_po`: Salida que transporta el estado de los LEDs
 
 #### 4. Criterios de diseño
-Diagramas, texto explicativo...
 Se planteó que los bits obtenidos en el módulo 3.1, cada atravesara un multiplexor donde el valor del bit es el que selecciona la condición del LED, si apagado o encendido.
+(diagrama)
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+En el testbench de este modulo, se mostro como dependiendo del valor del bit es que selecciona como el LED va cambiar a encendido o apagado. Mostrando asi el valor en binario introducido al sistema. 
+(resultados)
 
-### Otros modulos
-- agregar informacion siguiendo el ejemplo anterior.
-
-### 3.3 Módulo 3 (Co¿ódigo Decimal en 7 Segmentos)
+### 3.3 Módulo 3 (Código Decimal en 7 Segmentos)
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module module7SEG(
@@ -75,8 +84,22 @@ module module7SEG(
 - `catodo_po`: Salida que tiene el valor de los estados para cada LED de los 7-segmentos
 
 #### 4. Criterios de diseño
-Diagramas, texto explicativo...
 Para cada LED del 7-segmentos se realizó una tabla de verdad que determina que cuando se encienden y cuando se apagan, tanto para el 7-segmentos que representa las unidades como el que representa las decenas. 
+(diagrama)
+
+#### 5. Simplificación de ecuaciones booleanas
+Para la simplicación de las ecuaciones booleanas usadas para el 7 segmentos se obtuvieron las siguientes tablas de verdad:
+
+![tabla de verdad 7 seg unidades](doc/img/tabla_verdad_unidades.jpg)
+
+![tabla de verdad 7 seg decenas](doc/img/tabla_verdad_decenas.jpg)
+
+Se procedio a la simplificacion de la ecuacion booleana, por medio de la utilizacion de mapas de Karnaugh. Se muestra el siguiente ejemplo del segmento a, donde se pudo simplificar al maximo y resulto la siguiente ecuacion booleana. 
+
+![mapa k segmento a](doc/img/mapa_k.jpeg)
+
+
+$\` a = BD + \overline{A}C + A\overline{C}+\overline{BD} \`$ 
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
