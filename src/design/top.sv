@@ -7,7 +7,7 @@ module TopModule (
     output logic [6:0] catodo_po
 );
 
-    logic [3:0] cod_bin;
+    wire [3:0] cod_bin;
 
     moduleGray Gray(
         .codigo_gray_pi(codigo_gray_pi),
