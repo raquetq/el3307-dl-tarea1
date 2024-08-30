@@ -7,21 +7,22 @@ module TopModule (
     output logic [6:0] catodo_po
 );
 
-    wire [3:0] cod_bin;
+    logic [3:0] cod_bin;
 
     moduleGray Gray(
-        .codigo_gray_pi(codigo_gray_pi),
-        .cod_bin(cod_bin)
+        .codigo_gray_pi(codigo_gray_pi)
+       // .cod_bin(cod_bin)
     );
 
     moduleLED LEDs(
-        .cod_bin(cod_bin),
+        .codigo_gray_pi(codigo_gray_pi),
         .codigo_bin_led_po(codigo_bin_led_po)
     );
 
     module7SEG seg7(
+        .codigo_gray_pi(codigo_gray_pi),
         .rst_pi(rst_pi),
-        .cod_bin(cod_bin),
+        //.cod_bin(cod_bin),
         .anodo_po(anodo_po),
         .catodo_po(catodo_po)
     );

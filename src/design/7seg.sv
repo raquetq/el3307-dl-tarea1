@@ -1,6 +1,7 @@
 module module7SEG(
+    input logic [3:0] codigo_gray_pi,
     input logic rst_pi,
-    input logic [3:0] cod_bin,
+    //input logic [3:0] cod_bin,
     output logic [1:0] anodo_po,
     output logic [6:0] catodo_po
 );
@@ -9,10 +10,10 @@ module module7SEG(
     assign anodo_po = (~rst_pi) ? 2'b01:2'b10;
 
     //Codigo biario en Conmutadores
-    assign b1 = cod_bin[3];
-    assign b2 = cod_bin[2];
-    assign b3 = cod_bin[1];
-    assign b4 = cod_bin[0];
+    assign b1 = codigo_gray_pi[3];//cod_bin[3];
+    assign b2 = codigo_gray_pi[2] ^ b1;//cod_bin[2];
+    assign b3 = codigo_gray_pi[1] ^ b2;//cod_bin[1];
+    assign b4 = codigo_gray_pi[0] ^ b3;//cod_bin[0];
 
     //7seg unidades
     assign seg_a = ((!b2) && (!b4)) || (b1 && (!b3)) || ((!b1) && b3) || (b2 && b4);

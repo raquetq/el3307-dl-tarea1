@@ -36,7 +36,7 @@ module moduleMainTB;
     );*/
     
     initial begin
-        $monitor("Gray(%b), Bin(%b), Seg7(%b), displays(%b), LED(%b)", gray, led, seg7, disp, led);
+        $monitor("Gray(%b), Bin(%b), Seg7(%b), displays(%b), LED(%b)", gray, bin, seg7, disp, bin);
         gray = 4'b0000; #1; //valor inicial
         button = 0; #1;
         button = 1; #1;
