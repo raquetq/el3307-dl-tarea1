@@ -13,9 +13,17 @@
 ## 3. Desarrollo
 
 ### 3.0 Descripción general del sistema
-(describir circuito completo)
+El sistema por utilizar es un circuito digital diseñado para capturar un código Gray, convertirlo a un formato binario, y mostrar el resultado tanto en luces LED como en un display de 7 segmentos. La implementación se realiza utilizando una FPGA, que permite la programación del comportamiento que se requiere. El proceso se divide en varios subsistemas que se conectan para lograr la funcionalidad deseada. 
+
+Como primero se tiene el subsistema de lectura y decodificación de código Gray. El código Gray es un tipo de código binario en el cual dos valores consecutivos difieren en un solo bit. Este va ser el punto de partida donde se introduce el código Gray mediante interruptores y este va hacia la FPGA, donde se capturan los valores del código de Gray. 
+
+Luego se conecta con el subsistema de despliegue de código ingresado traducido a formato binario en luces LED. Este bloque dentro de la FPGA convierte el código Gray capturado en un código binario. Se utilizan operaciones lógicas, específicamente compuertas XOR, para realizar esta conversión. Ya cuando se obtiene la conversión, puede seguir al siguiente subsistema.
+
+Por último, se tiene el subsistema de despliegue de código ingresado y decodificado en display de 7 segmentos. Donde se maneja el despliegue del código binario resultante hacia los dispositivos de salida: luces LED y el display de 7 segmentos. Dando una representación visual del código introducido. 
+
 
 ![diagrama de bloques del sistema en general](doc/img/diag_general.jpg) 
+Diagrama de bloques del sitema general.
 
 ### 3.1 Módulo 1 (Conversión Código Gray a Código Binario)
 
@@ -36,8 +44,9 @@ module moduleGray (
 #### 4. Criterios de diseño
 Basándose de la conversión de código Gray a código binario se buscó una forma de representarlo en ecuaciones lógicas. Para convertir un número en código Gray a código binario, primero, se mantiene el MSB, y luego, se toma este valor y se suma al siguiente bit, si la suma da como resultado 10'b, se descarta el acarreo, y a partir de este punto puede ser visto como una operación XOR entre el resultado y el siguiente bit. Las ecuaciones lógicas para este módulo fueron las siguientes:
 
-Se obtuvo la ecuación booleana: $\` Y_1 = A ; Y_2 = A \oplus B ; Y_3 = A\oplus B\oplus C; Y_4= A\oplus B\oplus C\oplus D \`$. 
-La representacion en un diagrama es el siguiente. 
+ $\` Y_1 = A ; Y_2 = A \oplus B ; Y_3 = A\oplus B\oplus C; Y_4= A\oplus B\oplus C\oplus D \`$. 
+
+La representacion de la ecuacion anterior en el diagrama es la siguiente: 
 
 ![diagrama de bloques de traducion codigo gray a binario](doc/img/diag_gray_a_bin.jpg)
 
@@ -124,15 +133,17 @@ Para la simplicación de las ecuaciones booleanas usadas para el 7 segmentos se 
 
 Se procedio a la simplificacion de la ecuacion booleana, por medio de la utilizacion de mapas de Karnaugh. Se muestra el siguiente ejemplo del segmento a, donde se pudo simplificar al maximo y resulto la siguiente ecuacion booleana. 
 
-![mapa k segmento a](doc/img/mapa_k.jpeg)
-
-
 $\` a = BD + \overline{A}C + A\overline{C}+\overline{BD} \`$ 
+
+![mapa k segmento a](doc/img/mapa_k.jpeg)
+Ejemplo de mapa de Karnaugh para el segmento a.
 
 #### 6. Testbench
 Para la prueba en el testbench, se decidió probar que mostrara el resultado decimal correcto, que cada segmento encendiera al valor correcto y simulaciones de presionar el botón para comprobar el cambio del 7-segmento de unidades a decenas y viceversa.
 
-## 4. Consumo de recursos
+## 4. Ejemplo de simulacion funcional del sistema completo.
+
+## 5. Consumo de recursos
 Al realizar el análisis de consumo de recursos, se obtuvieron los siguientes datos: 
 
 ```SystemVerilog
@@ -182,7 +193,7 @@ Con lo que se puede analizar que el diseño es eficiente y no requiere gran part
 
 Los datos también muestran como el diseño utiliza de manera adecuada los recursos disponibles, especializándose solo en lo que es necesario para realizar las funciones básicas del sistema y dejando disponibles recursos adicionales para futuras expansiones o mejoras. Esto refleja un diseño bien balanceado y optimizado para la tarea asignada.
 
-## 5. Problemas encontrados durante el proyecto
+## 6. Problemas encontrados durante el proyecto
 1. Cuando se declara un commutador, si el nombre es únicamente una letra mayúscula o un número, el programa no toma como tal. Para solucionarlo se decidió utilzar letras minúsculas y enumerarlas si fuera el caso.
 2. Al declarar las "constrains", se debe colocar el valor de tensión en los pines, debido a que si uno de estos lo atraviesan tensiones diferentes el código no podrá ser colocado en el FPGA.
 3. En el modulo de 7 segmentos al agregar la ecuacion booleana al segmento f, estaba dando un valor no esperado, por lo que se tuvo que volver a evaluar este segmento para obtener el resultado deseado.
