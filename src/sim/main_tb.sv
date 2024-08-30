@@ -11,8 +11,8 @@ module moduleMainTB;
     TopModule Top(
         .codigo_gray_pi(gray),
         .rst_pi(button),
-        .cod_bin(bin),
-        .codigo_bin_led_po(led),
+        //.cod_bin(bin),
+        .codigo_bin_led_po(bin),
         .anodo_po(disp),
         .catodo_po(seg7)
     );
@@ -36,7 +36,7 @@ module moduleMainTB;
     );*/
     
     initial begin
-        $monitor("Dec(%d), Bin(%b), Seg7(%b), displays(%b), LED(%b)", bin, bin, seg7, disp, led);
+        $monitor("Gray(%b), Bin(%b), Seg7(%b), displays(%b), LED(%b)", gray, led, seg7, disp, led);
         gray = 4'b0000; #1; //valor inicial
         button = 0; #1;
         button = 1; #1;

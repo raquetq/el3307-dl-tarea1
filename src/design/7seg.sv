@@ -9,10 +9,10 @@ module module7SEG(
     assign anodo_po = (~rst_pi) ? 2'b01:2'b10;
 
     //Codigo biario en Conmutadores
-    assign b1 = (cod_bin[3] == 1'b1) ? 1'b1 : 1'b0;
-    assign b2 = (cod_bin[2] == 1'b1) ? 1'b1 : 1'b0;
-    assign b3 = (cod_bin[1] == 1'b1) ? 1'b1 : 1'b0;
-    assign b4 = (cod_bin[0] == 1'b1) ? 1'b1 : 1'b0;
+    assign b1 = cod_bin[3];
+    assign b2 = cod_bin[2];
+    assign b3 = cod_bin[1];
+    assign b4 = cod_bin[0];
 
     //7seg unidades
     assign seg_a = ((!b2) && (!b4)) || (b1 && (!b3)) || ((!b1) && b3) || (b2 && b4);
