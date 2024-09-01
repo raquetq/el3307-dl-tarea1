@@ -1,7 +1,7 @@
 # Tarea 1: Introducción a diseño digital en HDL
 
 ## 1. Introducción
-
+Un sistema combinacional es un sistema lógico donde sus salidas son únicamente función de sus entradas en un momento dado y no guardan estados  anteriores. Para este proyecto se busca implementar un sistema combinacional que decodifique un código Gray brindado y que por medio de este realice funciones como cambiar estados de luces LED y brindar valores a displays 7 segmentos, utilizando exclusivamente álgebra booleana para expresar estos comportamientos en ecuaciones.
 
 ## 2. Objetivos
 - Elaborar un subsistema de lectura y decodififcación de código Gray.
@@ -162,7 +162,7 @@ Figura X. Ejemplo de mapa de Karnaugh para el segmento a en el display de unidad
 Para la prueba en el testbench, se decidió probar que mostrara el resultado decimal correcto, que cada segmento encendiera al valor correcto y simulaciones de presionar el botón para comprobar el cambio del 7-segmento de unidades a decenas y viceversa.
 
 ## 4. Ejemplo de simulación funcional del sistema completo.
-En la Figura X, se muestran los valores los valores del 0 al 15 (valor decimal), representados en cada proceso que atravesaron por los módulos, mostrando en pantalla los resultados de su valor en código Gray, su valor en código binario, el valor binario de los LEDs, el valor binario de los displays 7 segmentos, y el valor binario del botón que cambia el display encendido.
+En la Figura X, se muestran los valores los valores del 0 al 15 (valor decimal), representados en cada proceso que atravesaron por los módulos, mostrando en pantalla los resultados de su valor en código Gray, su valor en código binario y el valor binario de los LEDs negados debido a que la salida del FPGA invierte el valor, el valor binario de los displays 7 segmentos, y el valor binario del botón que cambia el display encendido.
 
 ![mapa k segmento a](doc/img/tb_ejecutado.png)
 
@@ -224,6 +224,11 @@ Los datos también muestran como el diseño utiliza de manera adecuada los recur
 En las pruebas realizadas en la protoboard, se logró que tanto la parte del circuito de introducción del código Gray como las luces LED del FPGA funcionara de la  manera esperaba, pero los display 7 segmentos, tuvieron un par problemas, los cuales fueron que encendieran al  mismo tiempo o que encendían los LEDs correctos del número indicado, pero los LEDs estaban divididos entre ambos displays. Estos problemas fueron debido a que las conexiones de los displays se realizaron de manera incorrectas porque estos eran 7 segmentos de cátodo común y no se comprobó ese detalle a la hora de realizar el prototipo.
 
 ## 6. Conclusiones
+Se logró demostrar que la  decodificación de código Gray a código binario actúa como una operación XOR entre las salidas comenzando con el MSB de la entrada.
+Debido a que se necesitan pines físicos declarados en el archivo de "constrains", se optó por incluir la función de decodificación del código Gray a los módulos de control de estado de las luces LED y el módulo enfocado en los displays 7 segmentos, para reducir el número de pines que se podrían haber utilizado.
+El valor binario decodificado se niega su valor salida en el módulo de LEDs debido a que la FPGA trabaja las salidas de manera inversa y así lograr que las luces encienda con un 1 en la entrada del módulo y se apaguen con un 0.
+Se logró que un botón de la FPGA cambiara el display 7 segmentos que enciende, pero el cambio permanece únicamente cuando se mantiene presionado el botón, cuando este se suelta regresa al valor original.
+Se realizó una ecuación booleana para segmento de los diplays y las ecuaciones resultantes fueron simplificadas por medio de mapas de Karnaugh.
 
 ## 7. Problemas encontrados durante el proyecto
 1. Cuando se declara un commutador, si el nombre es únicamente una letra mayúscula o un número, el programa no toma como tal. Para solucionarlo se decidió utilzar letras minúsculas y enumerarlas si fuera el caso.
