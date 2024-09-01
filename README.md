@@ -9,14 +9,14 @@
 - Diseñar un subsistema que decodifique el código Gray ingresado en un display de 7 segmentos en formato decimal.
 
 ## 3. Propuesta de Solución
-### 3.0. Abreviaturas y definiciones
+### 3.1. Abreviaturas y definiciones
 - **FPGA**: Field Programmable Gate Arrays
 - **MSB**: Bit más significativo
 - **!**: Operador NOT
 - **+**: Operador OR
 - **^**: Operador XOR
 
-### 3.1. Descripción general del sistema
+### 3.2. Descripción general del sistema
 El sistema utilizado fue un circuito digital diseñado para capturar un código Gray, convertirlo a un formato binario, y mostrar el resultado tanto en luces LED como en un display de 7 segmentos. La implementación se realizó utilizando una FPGA, que permite la programación del comportamiento que se requiere. El proceso se dividió en varios subsistemas que se conectan para lograr la funcionalidad deseada. 
 
 En primer lugar se encuentra el subsistema de lectura y decodificación de código Gray. El código Gray es un tipo de código binario en el cual dos valores consecutivos difieren en un solo bit. Este fue el punto de partida, donde se introduce el código Gray mediante interruptores y este entra hacia la FPGA por medio de sus pines, donde se capturan los valores. El subsistema lee los pines de entrada con el código Gray, los traduce a código binario y los prepara para la siguiente etapa.  Se utilizaron operaciones lógicas, específicamente compuertas XOR, para realizar esta conversión. 
@@ -24,6 +24,7 @@ En primer lugar se encuentra el subsistema de lectura y decodificación de códi
 Luego, el valor traducido atraviesa el módulo de luces LED, donde los pines de salida, con el valor binario, determinan si las luces encienden o se mantienen apagadas. Por último, se tiene el subsistema de despliegue de código ingresado y decodificado en display de 7 segmentos. Donde se maneja el despliegue del código binario resultante hacia los dispositivos de salida: luces LED y el display de 7 segmentos. Dando una representación visual del código introducido en formato decimal. 
 
 ![diagrama de bloques del sistema en general](doc/img/diag_general.jpg) 
+
 Figura 1. Diagrama de bloques del sistema general.
 
 ### 3.3. Módulo 1 (Módulo Top)
@@ -74,10 +75,16 @@ Basándose de la conversión de código Gray a código binario se buscó una for
 
  $\` Y_1 = A ; Y_2 = A \oplus B ; Y_3 = A\oplus B\oplus C; Y_4= A\oplus B\oplus C\oplus D \`$. 
 
-La representacion de la ecuacion anterior en el diagrama es la siguiente: 
+La tabla de verdad de la ecuación anterior fue la siguiente:
+![tabla de verdad de traduccion codigo gray a binario](doc/img/tt_graybin.png)
+
+Figura 2. Tabla de verdad de traducción código gray a binario.
+
+La representación de la ecuación anterior en el diagrama es la siguiente: 
 
 ![diagrama de bloques de traducion codigo gray a binario](doc/img/diag_gray_a_bin.jpg)
-Figura 2. Diagrama de bloques de traducción de código Gray a código binario.
+
+Figura 3. Diagrama de bloques de traducción de código Gray a código binario.
 
 Se planteó que se realizara la conversión de código Gray a código binario en el propio módulo, y que cada bit de este valor atravesara un multiplexor donde el valor del bit es el que selecciona la condición del LED, si es verdadero se enciende, y se falso se apaga. La ecuación lógica para este módulo se puede representar como una compuerta AND, con N = [1:0]: L = YN
 
@@ -136,9 +143,11 @@ Para cada LED del 7-segmentos se realizó una tabla de verdad que determina que 
 Para la simplicación de las ecuaciones booleanas usadas para el 7 segmentos se obtuvieron las siguientes tablas de verdad:
 
 ![tabla de verdad 7 seg unidades](doc/img/tabla_verdad_unidades.jpg)
+
 Figura X. Tabla de verdad de display 7 segmentos que representa las unidades.
 
 ![tabla de verdad 7 seg decenas](doc/img/tabla_verdad_decenas.jpg)
+
 Figura X. Tabla de verdad de display 7 segmentos que representa las decenas.
 
 Se procedió a la simplificación de la ecuación booleana, por medio de la utilización de mapas de Karnaugh. Se muestra el siguiente ejemplo del segmento a en el display de unidades, donde se pudo simplificar al máximo y resultó la siguiente ecuación booleana. 
@@ -146,41 +155,47 @@ Se procedió a la simplificación de la ecuación booleana, por medio de la util
 $\` a = BD + \overline{A}C + A\overline{C}+\overline{BD} \`$ 
 
 ![mapa k segmento a](doc/img/mapa_k.jpeg)
+
 Figura X. Ejemplo de mapa de Karnaugh para el segmento a en el display de unidades.
 
 #### 6. Testbench
 Para la prueba en el testbench, se decidió probar que mostrara el resultado decimal correcto, que cada segmento encendiera al valor correcto y simulaciones de presionar el botón para comprobar el cambio del 7-segmento de unidades a decenas y viceversa.
 
 ## 4. Ejemplo de simulación funcional del sistema completo.
+En la Figura X, se muestran los valores los valores del 0 al 15 (valor decimal), representados en cada proceso que atravesaron por los módulos, mostrando en pantalla los resultados de su valor en código Gray, su valor en código binario, el valor binario de los LEDs, el valor binario de los displays 7 segmentos, y el valor binario del botón que cambia el display encendido.
 
-## Análisis de Resultados
+![mapa k segmento a](doc/img/tb_ejecutado.png)
 
-### 5. Consumo de recursos
+Figura X. Simulación del testbench.
+
+## 5. Análisis de Resultados
+### 5.1 Consumo de recursos
 Al realizar el análisis de consumo de recursos, se obtuvieron los siguientes datos: 
 
 ```SystemVerilog
 === TopModule ===
 
-   Number of wires:                 26
-   Number of wire bits:             61
-   Number of public wires:          26
-   Number of public wire bits:      61
+   Number of wires:                 31
+   Number of wire bits:             63
+   Number of public wires:          31
+   Number of public wire bits:      63
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:                 25
+   Number of cells:                 45
      GND                             1
      IBUF                            5
-     LUT1                            1
-     LUT4                            3
-     MUX2_LUT5                       1
+     LUT1                            3
+     LUT2                            1
+     LUT3                            5
+     LUT4                           10
+     MUX2_LUT5                       7
      OBUF                           13
-     VCC                             1
 
 ```
-Con base a los datos obtenidos se utilizaron un numero de Wires de 26 y Wire Bits 61, al ser estos los que se encargan de las conexiones internas que llevan señales entre los diferentes componentes del diseño. Cada wire bit es una línea de señal específica dentro del circuito, y 61 bits indican un nivel moderado de interconexiones, reflejando la complejidad relativa del sistema que maneja múltiples entradas y salidas.
+Con base a los datos obtenidos se utilizaron un número de Wires de 31 y Wire Bits 63, al ser estos los que se encargan de las conexiones internas que llevan señales entre los diferentes componentes del diseño. Cada wire bit es una línea de señal específica dentro del circuito, y 61 bits indican un nivel moderado de interconexiones, reflejando la complejidad relativa del sistema que maneja múltiples entradas y salidas.
 
-Con respecto al número de celdas (25), al ser cada celda un componente lógico o funcional dentro de la FPGA, como compuertas lógicas, buffers, y otros bloques necesarios para la operación del circuito. Con 25 celdas, el diseño mantiene un uso eficiente de recursos.
+Con respecto al número de celdas (45), al ser cada celda un componente lógico o funcional dentro de la FPGA, como compuertas lógicas, buffers, y otros bloques necesarios para la operación del circuito. Con 45 celdas, el diseño mantiene un uso relativamente eficiente de recursos.
 La cantidad de celdas y conexiones está justificada por la necesidad de manejar múltiples entradas y salidas, asegurando que el sistema funcione correctamente y de manera eficiente. El uso de recursos refleja la complejidad del diseño, para cumplir con el objetivo de la conversión de datos y la visualización de resultados. 
 
 Además, acerca a la utilización de recursos del dispositivo, se obtuvieron los siguientes datos:
@@ -188,10 +203,10 @@ Además, acerca a la utilización de recursos del dispositivo, se obtuvieron los
 ```SystemVerilog
 Info: Device utilisation:
 Info: 	                 VCC:     1/    1   100%
-Info: 	               SLICE:     3/ 8640     0%
-Info: 	                 IOB:     8/  274     2%
+Info: 	               SLICE:    19/ 8640     0%
+Info: 	                 IOB:    18/  274     6%
 Info: 	                ODDR:     0/  274     0%
-Info: 	           MUX2_LUT5:     0/ 4320     0%
+Info: 	           MUX2_LUT5:     7/ 4320     0%
 Info: 	           MUX2_LUT6:     0/ 2160     0%
 Info: 	           MUX2_LUT7:     0/ 1080     0%
 Info: 	           MUX2_LUT8:     0/ 1056     0%
@@ -205,13 +220,17 @@ Con lo que se puede analizar que el diseño es eficiente y no requiere gran part
 
 Los datos también muestran como el diseño utiliza de manera adecuada los recursos disponibles, especializándose solo en lo que es necesario para realizar las funciones básicas del sistema y dejando disponibles recursos adicionales para futuras expansiones o mejoras. Esto refleja un diseño bien balanceado y optimizado para la tarea asignada.
 
-## Conclusiones
+### 5.2. Prueba del prototipo.
+En las pruebas realizadas en la protoboard, se logró que tanto la parte del circuito de introducción del código Gray como las luces LED del FPGA funcionara de la  manera esperaba, pero los display 7 segmentos, tuvieron un par problemas, los cuales fueron que encendieran al  mismo tiempo o que encendían los LEDs correctos del número indicado, pero los LEDs estaban divididos entre ambos displays. Estos problemas fueron debido a que las conexiones de los displays se realizaron de manera incorrectas porque estos eran 7 segmentos de cátodo común y no se comprobó ese detalle a la hora de realizar el prototipo.
 
-## 6. Problemas encontrados durante el proyecto
+## 6. Conclusiones
+
+## 7. Problemas encontrados durante el proyecto
 1. Cuando se declara un commutador, si el nombre es únicamente una letra mayúscula o un número, el programa no toma como tal. Para solucionarlo se decidió utilzar letras minúsculas y enumerarlas si fuera el caso.
 2. Al declarar las "constrains", se debe colocar el valor de tensión en los pines, debido a que si uno de estos lo atraviesan tensiones diferentes el código no podrá ser colocado en el FPGA.
 3. En el módulo de 7 segmentos al agregar la ecuación booleana al segmento f, dió un valor no esperado, por lo que se tuvo que volver a evaluar este segmento para obtener el resultado deseado.
 4. Las entradas y salidas de cada módulo son únicamente pines declarados en las constrains del proyecto. Si se necesitan más, se declaran en el archivo .cst, y lo mejor es eliminar todo pin que no se utilice del mismo archivo.
+5. Los displays 7 segmentos utilizados fueron de cátodo común, lo cual provocó confusión a la hora de realizar el circuito de prueba.
 
 ## Apendices:
 ### Apendice 1:
