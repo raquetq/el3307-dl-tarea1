@@ -137,18 +137,23 @@ Las ecuaciones lógicas para este módulo fueron las siguientes:
 - S = X^Y
 - Activándose únicamente cuando es verdadero.
 Para cada LED del 7-segmentos se realizó una tabla de verdad que determina que cuando se encienden y cuando se apagan, tanto para el 7-segmentos que representa las unidades como el que representa las decenas. 
-(diagrama)
+
+Se presenta el diagrama de bloques de código decimal en 7 segmentos:  
+
+![diagrama de bloques de 7 segmentos](doc/img/diag_7-seg.jpg)
+
+Figura 4. Diagrama de bloques de 7 segmentos.
 
 #### 5. Simplificación de ecuaciones booleanas
 Para la simplicación de las ecuaciones booleanas usadas para el 7 segmentos se obtuvieron las siguientes tablas de verdad:
 
 ![tabla de verdad 7 seg unidades](doc/img/tabla_verdad_unidades.jpg)
 
-Figura X. Tabla de verdad de display 7 segmentos que representa las unidades.
+Figura 5. Tabla de verdad de display 7 segmentos que representa las unidades.
 
 ![tabla de verdad 7 seg decenas](doc/img/tabla_verdad_decenas.jpg)
 
-Figura X. Tabla de verdad de display 7 segmentos que representa las decenas.
+Figura 6. Tabla de verdad de display 7 segmentos que representa las decenas.
 
 Se procedió a la simplificación de la ecuación booleana, por medio de la utilización de mapas de Karnaugh. Se muestra el siguiente ejemplo del segmento a en el display de unidades, donde se pudo simplificar al máximo y resultó la siguiente ecuación booleana. 
 
@@ -156,7 +161,7 @@ $\` a = BD + \overline{A}C + A\overline{C}+\overline{BD} \`$
 
 ![mapa k segmento a](doc/img/mapa_k.jpeg)
 
-Figura X. Ejemplo de mapa de Karnaugh para el segmento a en el display de unidades.
+Figura 7. Ejemplo de mapa de Karnaugh para el segmento a en el display de unidades.
 
 #### 6. Testbench
 Para la prueba en el testbench, se decidió probar que mostrara el resultado decimal correcto, que cada segmento encendiera al valor correcto y simulaciones de presionar el botón para comprobar el cambio del 7-segmento de unidades a decenas y viceversa.
@@ -166,7 +171,7 @@ En la Figura X, se muestran los valores los valores del 0 al 15 (valor decimal),
 
 ![mapa k segmento a](doc/img/tb_ejecutado.png)
 
-Figura X. Simulación del testbench.
+Figura 8. Simulación del testbench.
 
 ## 5. Análisis de Resultados
 ### 5.1 Consumo de recursos
@@ -237,6 +242,3 @@ Se realizó una ecuación booleana para segmento de los diplays y las ecuaciones
 4. Las entradas y salidas de cada módulo son únicamente pines declarados en las constrains del proyecto. Si se necesitan más, se declaran en el archivo .cst, y lo mejor es eliminar todo pin que no se utilice del mismo archivo.
 5. Los displays 7 segmentos utilizados fueron de cátodo común, lo cual provocó confusión a la hora de realizar el circuito de prueba.
 
-## Apendices:
-### Apendice 1:
-Tablas de verdad, diagramas de bloques,
